@@ -1,3 +1,9 @@
+- name: Show repo tree
+  run: |
+    pwd
+    ls -la
+    find . -maxdepth 3 -type f | sort
+
 # Sample workflow for building and deploying a Hugo site to GitHub Pages
 name: Deploy Hugo site to Pages
 
