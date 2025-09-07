@@ -1,77 +1,11 @@
-name: Deploy Hugo site to Pages
-
+name: yaml-test
 on:
   push:
     branches: [ master ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Hugo (extended)
-        uses: actions/setup-hugo@v3
-        with:
-          hugo-version: '0.121.2'
-          extended: true
-
-      # Minimalny szkielet Hugo — tylko jeśli brakuje plików w repo
-      - name: Ensure minimal Hugo site (if missing)
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p config/_default content
-          if [ ! -f config.toml ] && [ ! -f config/_default/hugo.toml ]; then
-            cat > config/_default/hugo.toml <<'EOF'
-baseURL = 'https://ratm23.github.io/hugo-test/'
-languageCode = 'en-us'
-title = 'Moja testowa strona w Hugo'
-[module]
-  [[module.imports]]
-    path = "github.com/theNewDynamic/gohugo-theme-ananke"
-EOF
-          fi
-          if [ ! -f content/_index.md ]; then
-            cat > content/_index.md <<'EOF'
----
-title: "Witaj w Hugo"
----
-To jest testowa strona wygenerowana przez **Hugo** 🚀
-EOF
-          fi
-          if [ ! -f go.mod ]; then
-            cat > go.mod <<'EOF'
-module github.com/ratm23/hugo-test
-go 1.21
-EOF
-          fi
-
-      - name: Build site
-        run: hugo --minify
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./public
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - run: echo "workflow ok"
