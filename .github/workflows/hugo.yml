@@ -24,11 +24,11 @@ jobs:
           hugo-version: '0.121.2'
           extended: true
 
-      - name: Build with Hugo
-        run: hugo --minify --source .
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+      - name: Ensure minimal Hugo site (if missing)
+        run: |
+          set -e
+          # config
+          if [ ! -f config.toml ] && [ ! -f config/_default/hugo.toml ]; then
+            mkdir -p config/_default
+            cat > config/_default/hugo.toml << 'EOF'
+baseURL = 'https://ratm23.g
