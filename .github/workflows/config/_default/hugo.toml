@@ -1,0 +1,7 @@
+baseURL = 'https://ratm23.github.io/hugo-test/'
+languageCode = 'en-us'
+title = 'Moja testowa strona w Hugo'
+
+[module]
+  [[module.imports]]
+    path = "github.com/theNewDynamic/gohugo-theme-ananke"
