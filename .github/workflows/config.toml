@@ -1,0 +1,4 @@
+baseURL = 'https://twoja-nazwa.github.io/hugo-pages-test/'
+languageCode = 'en-us'
+title = 'Moja testowa strona w Hugo'
+theme = 'ananke'
