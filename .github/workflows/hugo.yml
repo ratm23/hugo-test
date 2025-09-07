@@ -1,4 +1,5 @@
-name: hugo-build-test
+name: Deploy Hugo site to Pages
+
 on:
   push:
     branches: [ master ]
@@ -16,26 +17,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Hugo
-        uses: actions/setup-hugo@v3
+      - name: Setup Hugo (extended)
+        uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: '0.121.2'
           extended: true
 
-      - name: Build Hugo site
-        run: hugo --minify
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./public
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # Utwórz minimalne pliki, jeśli nie istnieją
+      - name: Ensure minimal Hugo site (if missing)
+        run: |
+          mkdir -p config/_d_
